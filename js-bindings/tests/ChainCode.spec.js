@@ -1,4 +1,4 @@
-const blsSignatures = require('..')();
+let blsSignatures = require('..')();
 const assert = require('assert');
 
 function getChainCodeHex() {
@@ -9,10 +9,8 @@ function getChainCodeBytes() {
     return Uint8Array.from(Buffer.from(getChainCodeHex(), 'hex'));
 }
 
-before((done) => {
-    blsSignatures.then(() => {
-        done();
-    });
+before(async function() {
+    blsSignatures = await blsSignatures;
 });
 
 describe('ChainCode', () => {

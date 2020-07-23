@@ -167,8 +167,7 @@ declare class Threshold {
     static verifySecretFragment(playerIndex: number, secretFragment: PrivateKey, commitment: PublicKey[], threshold: number): boolean;
 }
 
-interface ModuleInstance {
-    then: (callback: (moduleInstance: ModuleInstance) => any) => ModuleInstance;
+declare interface BLS {
     PrivateKey: typeof PrivateKey;
     InsecureSignature: typeof InsecureSignature;
     Signature: typeof Signature;
@@ -182,6 +181,6 @@ interface ModuleInstance {
     GROUP_ORDER: string;
 }
 
-declare function createModule(options?: {}): ModuleInstance;
+declare function createModule(options?: {}): BLS;
 
 export = createModule;

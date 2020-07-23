@@ -1,14 +1,12 @@
-const blsSignatures = require('..')();
+let blsSignatures = require('..')();
 const assert = require('assert');
 
 function getSeed() {
     return Uint8Array.from([1, 50, 6, 244, 24, 199, 1, 25]);
 }
 
-before((done) => {
-    blsSignatures.then(() => {
-        done();
-    });
+before(async function() {
+    blsSignatures = await blsSignatures;
 });
 
 describe('ExtendedPrivateKey', () => {

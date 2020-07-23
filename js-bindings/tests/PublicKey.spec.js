@@ -1,4 +1,4 @@
-const blsSignatures = require('..')();
+let blsSignatures = require('..')();
 const assert = require('assert');
 
 function getPublicKeyFixtureHex() {
@@ -25,10 +25,8 @@ function getPublicKeysArray() {
     })
 }
 
-before((done) => {
-    blsSignatures.then(() => {
-        done();
-    });
+before(async function() {
+    blsSignatures = await blsSignatures;
 });
 
 describe('PublicKey', () => {

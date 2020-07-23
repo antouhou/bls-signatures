@@ -11,9 +11,9 @@ npm i bls-signatures --save
 ```
 ```javascript
 const blsSignatures = require('bls-signatures')();
-blsSignatures.then(() => {
+blsSignatures.then((bls) => {
     // Instance is loaded and ready to be used
-    const { PrivateKey } = blsSignatures;
+    const { PrivateKey } = bls;
     const privateKey = PrivateKey.fromSeed(Uint8Array.from([1,2,3]));
     const sig = privateKey.sign(Uint8Array.from(Buffer.from("Hello world!")));
     const isValidSignature = sig.verify();

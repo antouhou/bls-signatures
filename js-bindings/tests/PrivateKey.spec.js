@@ -1,4 +1,4 @@
-const blsSignatures = require('..')();
+let blsSignatures = require('..')();
 const assert = require('assert');
 const crypto = require('crypto');
 
@@ -27,10 +27,8 @@ function getPkUint8Array() {
     return new Uint8Array(getPkBuffer());
 }
 
-before((done) => {
-    blsSignatures.then(() => {
-        done();
-    });
+before(async function() {
+    blsSignatures = await blsSignatures;
 });
 
 describe('PrivateKey', () => {

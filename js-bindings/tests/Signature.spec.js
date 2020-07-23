@@ -1,4 +1,4 @@
-const blsSignatures = require('..')();
+let blsSignatures = require('..')();
 const assert = require('assert');
 const {createHash} = require('crypto');
 
@@ -18,10 +18,8 @@ function getAggregationInfo() {
     };
 }
 
-before((done) => {
-    blsSignatures.then(() => {
-        done();
-    });
+before(async function() {
+    blsSignatures = await blsSignatures;
 });
 
 describe('Signature', () => {

@@ -1,4 +1,4 @@
-const blsSignatures = require('..')();
+let blsSignatures = require('..')();
 const assert = require('assert');
 const crypto = require('crypto');
 
@@ -6,10 +6,8 @@ function getSeed() {
     return Uint8Array.from([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 }
 
-before((done) => {
-    blsSignatures.then(() => {
-        done();
-    });
+before(async function() {
+    blsSignatures = await blsSignatures;
 });
 
 describe('AggregationInfo', () => {
