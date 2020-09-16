@@ -17,6 +17,12 @@ add_executable(blsjs ${CMAKE_CURRENT_SOURCE_DIR}/jsbindings.cpp
 add_custom_target(install_npm_dependencies npm ci)
 add_dependencies(blsjs install_npm_dependencies)
 
+add_custom_target(webpack npm run webpack)
+add_dependencies(blsjs webpack)
+
+add_custom_target(test npm run test)
+add_dependencies(blsjs test)
+
 if (SODIUM_FOUND)
     target_link_libraries(blsjs PRIVATE blstmp relic_s sodium)
 else ()
@@ -28,6 +34,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/package.json package.json COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/package-lock.json package-lock.json COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/blsjs.d.ts blsjs.d.ts COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/README.md README.md COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/webpack.config.js webpack.config.js COPYONLY)
 
 # Copy test files
 file(GLOB JS_BINDINGS_TESTS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/tests/ ${CMAKE_CURRENT_SOURCE_DIR}/tests/*)
