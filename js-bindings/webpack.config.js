@@ -1,11 +1,13 @@
 const path = require('path');
 
 const baseConfig = {
+    mode: 'production',
     entry: ['./blsjs.js'],
     module: {
         rules: [{
             test: /\.wasm$/,
-            use: 'wasm-loader',
+            type: 'javascript/auto',
+            loader: 'file-loader',
         }],
     },
     node: {
@@ -14,10 +16,11 @@ const baseConfig = {
 };
 
 const webConfig = Object.assign({}, baseConfig, {
-    target: 'web',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'web.bundle.js',
+        filename: 'bundle.js',
+        library: "bls",
+        libraryTarget: "umd",
     },
 });
 

@@ -14,14 +14,9 @@ file(GLOB_RECURSE WRAP_SRC ${CMAKE_CURRENT_SOURCE_DIR}/wrappers/*.cpp)
 add_executable(blsjs ${CMAKE_CURRENT_SOURCE_DIR}/jsbindings.cpp
         ${WRAP_HEADERS} ${WRAP_SRC}  ${CMAKE_CURRENT_SOURCE_DIR}/helpers.h ${CMAKE_CURRENT_SOURCE_DIR}/helpers.cpp
         )
+
 add_custom_target(install_npm_dependencies npm ci)
 add_dependencies(blsjs install_npm_dependencies)
-
-add_custom_target(webpack npm run webpack)
-add_dependencies(blsjs webpack)
-
-add_custom_target(test npm run test)
-add_dependencies(blsjs test)
 
 if (SODIUM_FOUND)
     target_link_libraries(blsjs PRIVATE blstmp relic_s sodium)
@@ -43,4 +38,5 @@ foreach(file ${JS_BINDINGS_TESTS})
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/${file} tests/${file} COPYONLY)
 endforeach()
 
-set_target_properties(blsjs PROPERTIES LINK_FLAGS "--bind -Oz --closure 1 -s MODULARIZE=1 -s ASSERTIONS=1")
+set_target_properties(blsjs PROPERTIES LINK_FLAGS "--bind -Oz --closure 1 -s MODULARIZE=1")
+add_custom_command(TARGET blsjs POST_BUILD COMMAND npm run webpack)
