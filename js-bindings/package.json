@@ -54,6 +54,7 @@
     "typescript": "^3.6.2",
     "wasm-loader": "^1.3.0",
     "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "buffer-loader": "^0.1.0"
   }
 }

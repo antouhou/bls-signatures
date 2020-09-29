@@ -3,14 +3,15 @@
 
 // build scripts for linux and are located in the root dir
 
-// for mac os, run brew install coreutils
+// for mac os, run brew install coreutils oracle-jdk
 
 // Edit blsjs.js that was produced by emcripten
 // Webpack config will bundle will put result into dist/bundle.js
 
-const buffer = require('./blsjs.wasm');
-const blob = new Blob([buffer], { type: "application/wasm" });
-const wasmUrl = URL.createObjectURL(blob);
+var Module = (function() {
+    var buf = require("./blsjs.wasm");
+    var blob = new Blob([buf], { type: "application/wasm" });
+    var wasmUrl = URL.createObjectURL(blob);
 
 // cmd + f -> fetch -> replace J with wasmUrl
 

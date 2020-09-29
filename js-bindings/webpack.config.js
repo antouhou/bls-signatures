@@ -6,8 +6,14 @@ const baseConfig = {
     module: {
         rules: [{
             test: /\.wasm$/,
-            type: 'javascript/auto',
-            loader: 'file-loader',
+            use: [
+                {
+                    loader: 'buffer-loader',
+                    options: {
+                        esModule: false,
+                    },
+                },
+            ],
         }],
     },
     node: {
