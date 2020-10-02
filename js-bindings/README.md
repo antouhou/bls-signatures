@@ -44,6 +44,18 @@ cmake ../ -DCMAKE_TOOLCHAIN_FILE={path_to_your_emscripten_installation}/emsdk/em
 cmake --build . --
 ```
 
+IMPORTANT:
+emscripten needs to be installed with fastcomp backend (emscripten version 1.38.x), fastcomp was removed in 2.0.x.
+Fastcomp is needed because at the time of writing the relic toolkit used by the library has a memory allocation that causes error when compiled with LLVM. 
+
+The build works only with node 10, as it's the only compatible version for that version of emscripten
+
+Build scripts for linux and mac os are located in the root dir. 
+
+#### Mac os
+
+For mac os, run brew install coreutils oracle-jdk and run the build script for the mac os from the root dir.
+
 Run the build after any changes to the library, including readme and tests, as the library will be deployed from the build directory, and the build system copies all the files from the source dir.
 ### Run tests
 Tests are run in node.js and Firefox, therefore you need to install node.js and Firefox.

@@ -11,17 +11,17 @@ include_directories(
 file(GLOB_RECURSE WRAP_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/wrappers/*.h)
 file(GLOB_RECURSE WRAP_SRC ${CMAKE_CURRENT_SOURCE_DIR}/wrappers/*.cpp)
 
-add_executable(blsjs ${CMAKE_CURRENT_SOURCE_DIR}/jsbindings.cpp
+add_executable(blsjstmp ${CMAKE_CURRENT_SOURCE_DIR}/jsbindings.cpp
         ${WRAP_HEADERS} ${WRAP_SRC}  ${CMAKE_CURRENT_SOURCE_DIR}/helpers.h ${CMAKE_CURRENT_SOURCE_DIR}/helpers.cpp
         )
 
 add_custom_target(install_npm_dependencies npm ci)
-add_dependencies(blsjs install_npm_dependencies)
+add_dependencies(blsjstmp install_npm_dependencies)
 
 if (SODIUM_FOUND)
-    target_link_libraries(blsjs PRIVATE blstmp relic_s sodium)
+    target_link_libraries(blsjstmp PRIVATE blstmp relic_s sodium)
 else ()
-    target_link_libraries(blsjs PRIVATE blstmp relic_s)
+    target_link_libraries(blsjstmp PRIVATE blstmp relic_s)
 endif ()
 
 # Copy necessary files for the npm package
@@ -29,7 +29,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/package.json package.json COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/package-lock.json package-lock.json COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/blsjs.d.ts blsjs.d.ts COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/README.md README.md COPYONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/webpack.config.js webpack.config.js COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/bundle_wasm_for_web.js bundle_wasm_for_web.js COPYONLY)
 
 # Copy test files
 file(GLOB JS_BINDINGS_TESTS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/tests/ ${CMAKE_CURRENT_SOURCE_DIR}/tests/*)
@@ -38,5 +38,5 @@ foreach(file ${JS_BINDINGS_TESTS})
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/${file} tests/${file} COPYONLY)
 endforeach()
 
-set_target_properties(blsjs PROPERTIES LINK_FLAGS "--bind -Oz --closure 1 -s MODULARIZE=1")
-add_custom_command(TARGET blsjs POST_BUILD COMMAND npm run webpack)
+set_target_properties(blsjstmp PROPERTIES LINK_FLAGS "--bind -Oz --closure 1 -s MODULARIZE=1")
+add_custom_command(TARGET blsjstmp POST_BUILD COMMAND npm run build:web)

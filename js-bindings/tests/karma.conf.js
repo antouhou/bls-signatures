@@ -13,12 +13,6 @@ const karmaConfig = {
         node: {
             fs: 'empty',
         },
-        // module: {
-        //     rules: [{
-        //         test: /\.wasm$/,
-        //         use: 'wasm-loader',
-        //     }],
-        // },
     },
     reporters: ['mocha'],
     port: 9876,
