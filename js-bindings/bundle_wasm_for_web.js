@@ -24,7 +24,6 @@ const modifiedSourceCode = originalSourceCode
     .replace(/fetch\(J/g, "fetch(wasmUrl")
     .replace(/process\.on\("uncaughtException",function\(a\){throw a;}\),/g, "")
     .replace(/process\.on\("unhandledRejection",x\),/g, "")
-console.log(modifiedSourceCode);
 const modifiedSourceBuffer = Buffer.from(modifiedSourceCode, 'utf-8');
 
 const bundleFileDescriptor = fs.openSync(outputPath, 'w+');
