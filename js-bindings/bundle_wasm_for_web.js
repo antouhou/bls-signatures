@@ -20,7 +20,8 @@ if (typeof window === "object") {
 `;
 
 const originalSourceCode = fs.readFileSync('./blsjstmp.js', 'utf-8');
-const modifiedSourceCode = originalSourceCode.replace(/fetch\(J/g, "fetch(wasmUrl");
+let modifiedSourceCode = originalSourceCode.replace(/fetch\(J/g, "fetch(wasmUrl");
+modifiedSourceCode = originalSourceCode.replace(/process.on("uncaughtException",function(a){throw a;}),process.on("unhandledRejection",x),\(J/g, "");
 const modifiedSourceBuffer = Buffer.from(modifiedSourceCode, 'utf-8');
 
 const bundleFileDescriptor = fs.openSync(outputPath, 'w+');
